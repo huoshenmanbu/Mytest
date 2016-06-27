@@ -7,14 +7,96 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+/** txt{
+    "msg": "请你输入时间人数",
+		"sendTemplate":"我想订%s,%s,%s", //发送时的文案模版，客户端按照顺序将每一项%s替换掉
+		//下面两个字段，不需要的不用关注
+		"handleType",1, //处理类型，可省。默认没有处理逻辑。1、表示当前的快捷输入不发送消息，而通过调用QuickInputToCall接口传递数据；2、表示当前的快捷输入发送消息，且通过调用QuickInputToCall接口传递数据
+		"handleDeliverContent":"xxxx",handleType为1或者2时，将此字段传递给QuickInputToCall接口
 
+    "list": [
+        {   //这里是第一项
+            "title": "日期",
+            "selectItems": [
+                "今天",
+                "明天"
+            ],
+						//有关联关系时，有下面这个节点，没有关联关系时，没有这个节点
+            "relativeInfo": {
+                "title": "时间",
+                "relativeItems": [
+                    [
+                        "12:00",
+                        "13:00"
+                    ],
+                    [
+                        "00:00",
+                        "01:00"
+                    ]
+                ]
+            }
+        },
+				//这里是另外一项
+        {
+            "title": "人数",
+            "selectItems": [
+                "1人",
+                "2人"
+            ]
+        }
+    ]
+	}*/
 public class MainActivity extends AppCompatActivity {
+    private static final String KEY_MSG = "msg";
+    private static final String KEY_SEND_TEMP = "sendTemplate";
+    private static final String KEY_LIST = "list";
 
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_RELATIVE_INFO = "relative_info";
+    private static final String KEY_SELECT_ITEMS = "selectItems";
+    private static final String KEY_RELATIVE_ITEMS = "relativeItems";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+    private void fromJson(JSONObject jsonObject) {
+        String msg = jsonObject.optString(KEY_MSG);
+        String sendTemp = jsonObject.optString(KEY_SEND_TEMP);
+
+        JSONArray listArray = jsonObject.optJSONArray(KEY_LIST);
+        int n = listArray.length();
+        for (int i = 0; i < n; i++) {
+            parseListItem(listArray.optJSONObject(i));
+        }
+    }
+
+    private void parseListItem(JSONObject jsonObject) {
+        String title = jsonObject.optString(KEY_TITLE);
+
+        JSONArray jsonArray = jsonObject.optJSONArray(KEY_SELECT_ITEMS);
+        String item1 = jsonArray.optString(0);
+        String item2 = jsonArray.optString(1);
+
+
+        JSONObject obj = jsonObject.optJSONObject(KEY_RELATIVE_INFO);
+        if (obj != null) {
+            // 有关联关系的情况
+            String title_rel = obj.optString(KEY_TITLE);
+
+            JSONArray relativeItemsObj = obj.optJSONArray(KEY_RELATIVE_ITEMS);
+
+            JSONArray r1 = relativeItemsObj.optJSONArray(0);
+            String a = r1.optString(0);//"12:00"
+            String b = r1.optString(1);//"13:00"
+
+            JSONArray r2 = relativeItemsObj.optJSONArray(1);
+            String c = r2.optString(0);//00:00
+            String d = r2.optString(1);//01:00
+        }
+
+    }
+
     public void toJsonString() {
         JSONObject jsonObject = new JSONObject();
 
