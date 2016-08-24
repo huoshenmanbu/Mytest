@@ -1,8 +1,11 @@
 package com.example.ruichu.mytest;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +50,7 @@ import org.json.JSONObject;
     ]
 	}*/
 public class MainActivity extends AppCompatActivity {
+//   解析的变量
     private static final String KEY_MSG = "msg";
     private static final String KEY_SEND_TEMP = "sendTemplate";
     private static final String KEY_LIST = "list";
@@ -55,10 +59,21 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_RELATIVE_INFO = "relative_info";
     private static final String KEY_SELECT_ITEMS = "selectItems";
     private static final String KEY_RELATIVE_ITEMS = "relativeItems";
+
+    private RelativeLayout mRelativeLayout;
+    private Button mButton;
+    private Button testButton;
+    private EditText mEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+
+    }
+    public void init(){
+        mEditText=(EditText)findViewById(R.id.test_edittext);
     }
     private void fromJson(JSONObject jsonObject) {
         String msg = jsonObject.optString(KEY_MSG);
