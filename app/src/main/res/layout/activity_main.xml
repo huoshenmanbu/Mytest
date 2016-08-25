@@ -21,13 +21,12 @@
             android:minHeight="70dp"
             android:hint="输入"/>
     </RelativeLayout>
-    
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <pl.droidsonroids.gif.GifImageView
+        <com.cunoraz.gifview.library.GifView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/gif"/>
+            app:gif="@drawable/gif"/>
     </RelativeLayout>
  </LinearLayout>

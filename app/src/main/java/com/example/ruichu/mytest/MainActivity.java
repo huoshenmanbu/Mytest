@@ -3,9 +3,10 @@ package com.example.ruichu.mytest;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
+import com.cunoraz.gifview.library.GifView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,9 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_RELATIVE_ITEMS = "relativeItems";
 
     private RelativeLayout mRelativeLayout;
-    private Button mButton;
-    private Button testButton;
     private EditText mEditText;
+    private GifView gifView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
